@@ -264,6 +264,93 @@ public class FileResource extends BaseResource {
         return Response.ok().entity(response.build()).build();
     }
 
+
+    /**
+     * Update the due date of a file.
+     *
+     * @api {post} /file/:id Update a file
+     * @apiName PostFile
+     * @apiGroup File
+     * @apiParam {String} id File ID
+     * @apiParam {String} name Name
+     * @apiSuccess {String} status Status OK
+     * @apiError (client) ForbiddenError Access denied
+     * @apiError (client) ValidationError Validation error
+     * @apiPermission user
+     * @apiVersion 1.6.0
+     *
+     * @param id File ID
+     * @return Response
+     */
+    @POST
+    @Path("{id: [a-z0-9\\-]+}/dueDate")
+    public Response updateDueDate(@PathParam("id") String id,
+                           @FormParam("date") String date) {
+        if (!authenticate()) {
+            throw new ForbiddenClientException();
+        }
+
+        // Get the file
+        File file = findFile(id, null);
+
+        // Validate input data
+        date = ValidationUtil.validateLength(date, "date", 1, 200, false);
+
+        // Update the file
+        FileDao fileDao = new FileDao();
+        file.setDueDate(date);
+        fileDao.update(file);
+
+        // Always return OK
+        JsonObjectBuilder response = Json.createObjectBuilder()
+                .add("status", "ok");
+        return Response.ok().entity(response.build()).build();
+    }
+
+    /**
+     * Update the completion status of a file.
+     *
+     * @api {post} /file/:id Update a file
+     * @apiName PostFile
+     * @apiGroup File
+     * @apiParam {String} id File ID
+     * @apiParam {String} name Name
+     * @apiSuccess {String} status Status OK
+     * @apiError (client) ForbiddenError Access denied
+     * @apiError (client) ValidationError Validation error
+     * @apiPermission user
+     * @apiVersion 1.6.0
+     *
+     * @param id File ID
+     * @return Response
+     */
+    @POST
+    @Path("{id: [a-z0-9\\-]+}/setStatus")
+    public Response updateCompletionStatus(@PathParam("id") String id,
+                                           @FormParam("status") String status) {
+        if (!authenticate()) {
+            throw new ForbiddenClientException();
+        }
+
+        // Get the file
+        File file = findFile(id, null);
+
+        // Validate input data
+        status = ValidationUtil.validateLength(status, "date", 1, 200, false);
+
+        // Update the file
+        FileDao fileDao = new FileDao();
+        file.setCompletionStatus(status);
+        fileDao.update(file);
+
+        // Always return OK
+        JsonObjectBuilder response = Json.createObjectBuilder()
+                .add("status", "ok");
+        return Response.ok().entity(response.build()).build();
+    }
+
+
+
     /**
      * Process a file manually.
      *
