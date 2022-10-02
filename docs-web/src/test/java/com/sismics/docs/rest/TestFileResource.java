@@ -335,8 +335,8 @@ public class TestFileResource extends BaseJerseyTest {
     @Test
     public void testUploadDueDateAndCompletionStatus() throws Exception {
         // Login file_resources
-        clientUtil.createUser("file_resources");
-        String file1Token = clientUtil.login("file_resources");
+        clientUtil.createUser("file_resources_upload");
+        String file1Token = clientUtil.login("file_resources_upload");
         
         // Create a document
         String document1Id = clientUtil.createDocument(file1Token);
