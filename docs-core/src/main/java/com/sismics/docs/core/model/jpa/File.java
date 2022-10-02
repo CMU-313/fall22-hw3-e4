@@ -41,6 +41,20 @@ public class File implements Loggable {
     private String name;
 
     /**
+     * Due Date.
+     * mm/dd/yyyy
+     */
+    @Column(name = "FIL_DUEDATE_C", length = 200)
+    private String dueDate;
+
+    /**
+     * Name.
+     * pending/done
+     */
+    @Column(name = "FIL_COMPLETIONSTATUS_C", length = 200)
+    private String completionStatus;
+
+    /**
      * MIME type.
      */
     @Column(name = "FIL_MIMETYPE_C", length = 100)
@@ -117,6 +131,24 @@ public class File implements Loggable {
 
     public File setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public String getDueDate() {
+        return dueDate;
+    }
+
+    public File setDueDate(String dueDate) {
+        this.dueDate = dueDate;
+        return this;
+    }
+
+    public String getCompletionStatus() {
+        return completionStatus;
+    }
+
+    public File setCompletionStatus(String completionStatus) {
+        this.completionStatus = completionStatus;
         return this;
     }
 
@@ -209,6 +241,8 @@ public class File implements Loggable {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
                 .add("name", name)
+                .add("due date", dueDate)
+                .add("completion status", completionStatus)
                 .toString();
     }
 
