@@ -332,6 +332,98 @@ public class TestFileResource extends BaseJerseyTest {
         clientUtil.addFileToDocument(FILE_WIKIPEDIA_ZIP, fileZipToken, document1Id);
     }
 
+    @Test
+    public void testUploadDueDateAndCompletionStatus() throws Exception {
+        // Login file_resources
+        clientUtil.createUser("file_resources_upload");
+        String file1Token = clientUtil.login("file_resources_upload");
+        
+        // Create a document
+        String document1Id = clientUtil.createDocument(file1Token);
+        
+        // Add a file
+        String file1Id = clientUtil.addFileToDocument(FILE_PIA_00452_JPG, file1Token, document1Id);
+        
+        // Add a file
+        String file2Id = clientUtil.addFileToDocument(FILE_PIA_00452_JPG, file1Token, document1Id);
+        
+        // Get the file data
+        Response response = target().path("/file/" + file1Id + "/data").request()
+                .cookie(TokenBasedSecurityFilter.COOKIE_NAME, file1Token)
+                .get();
+        InputStream is = (InputStream) response.getEntity();
+        byte[] fileBytes = ByteStreams.toByteArray(is);
+        Assert.assertTrue(fileBytes.length > 0);
+        
+        // Get the thumbnail data
+        response = target().path("/file/" + file1Id + "/data")
+                .queryParam("size", "thumb")
+                .request()
+                .cookie(TokenBasedSecurityFilter.COOKIE_NAME, file1Token)
+                .get();
+        Assert.assertEquals(Status.OK, Status.fromStatusCode(response.getStatus()));
+        is = (InputStream) response.getEntity();
+        fileBytes = ByteStreams.toByteArray(is);
+        Assert.assertTrue(fileBytes.length > 0);
+        
+        // Get the content data
+        response = target().path("/file/" + file1Id + "/data")
+                .queryParam("size", "content")
+                .request()
+                .cookie(TokenBasedSecurityFilter.COOKIE_NAME, file1Token)
+                .get();
+        Assert.assertEquals(Status.OK, Status.fromStatusCode(response.getStatus()));
+
+        // Get the web data
+        response = target().path("/file/" + file1Id + "/data")
+                .queryParam("size", "web")
+                .request()
+                .cookie(TokenBasedSecurityFilter.COOKIE_NAME, file1Token)
+                .get();
+        Assert.assertEquals(Status.OK, Status.fromStatusCode(response.getStatus()));
+        is = (InputStream) response.getEntity();
+        fileBytes = ByteStreams.toByteArray(is);
+        Assert.assertTrue(fileBytes.length > 0);
+        
+        // Check that the files are not readable directly from FS
+        Path storedFile = DirectoryUtil.getStorageDirectory().resolve(file1Id);
+        Assert.assertEquals(MimeType.DEFAULT, MimeTypeUtil.guessMimeType(storedFile, null));
+
+        // Rename a file
+        target().path("file/" + file1Id)
+                .request()
+                .cookie(TokenBasedSecurityFilter.COOKIE_NAME, file1Token)
+                .post(Entity.form(new Form()
+                        .param("name", "Pale Blue Dot")), JsonObject.class);
+
+        // update a file
+        target().path("file/" + file1Id + "/dueDate")
+                .request()
+                .cookie(TokenBasedSecurityFilter.COOKIE_NAME, file1Token)
+                .post(Entity.form(new Form()
+                .param("date", "10/02/2022")), JsonObject.class);
+
+        target().path("file/" + file1Id + "/setStatus")
+                .request()
+                .cookie(TokenBasedSecurityFilter.COOKIE_NAME, file1Token)
+                .post(Entity.form(new Form()
+                .param("status", "pending")), JsonObject.class);
+
+        // Get all files from a document
+        JsonObject json = target().path("/file/list")
+                .queryParam("id", document1Id)
+                .request()
+                .cookie(TokenBasedSecurityFilter.COOKIE_NAME, file1Token)
+                .get(JsonObject.class);
+        JsonArray files = json.getJsonArray("files");
+        Assert.assertEquals(2, files.size());
+        Assert.assertEquals(file1Id, files.getJsonObject(0).getString("id"));
+        System.out.println(files.getJsonObject(0));
+        Assert.assertEquals("10/02/2022", files.getJsonObject(0).getString("date"));
+        Assert.assertEquals("pending", files.getJsonObject(0).getString("status"));
+
+    }
+
     /**
      * Test orphan files (without linked document).
      * 
