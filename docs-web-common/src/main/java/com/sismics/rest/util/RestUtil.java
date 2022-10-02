@@ -26,6 +26,8 @@ public class RestUtil {
         try {
             return Json.createObjectBuilder()
                     .add("id", fileDb.getId())
+                    .add("date", JsonUtil.nullable(fileDb.getDueDate()))
+                    .add("status", JsonUtil.nullable(fileDb.getCompletionStatus()))
                     .add("processing", FileUtil.isProcessingFile(fileDb.getId()))
                     .add("name", JsonUtil.nullable(fileDb.getName()))
                     .add("version", fileDb.getVersion())

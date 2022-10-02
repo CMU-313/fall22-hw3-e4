@@ -151,6 +151,7 @@ public class FileDao {
         TypedQuery<File> q = em.createQuery("select f from File f where f.id = :id and f.deleteDate is null", File.class);
         q.setParameter("id", file.getId());
         File fileDb = q.getSingleResult();
+        System.out.println(fileDb);
 
         // Update the file
         fileDb.setDocumentId(file.getDocumentId());
@@ -160,6 +161,9 @@ public class FileDao {
         fileDb.setMimeType(file.getMimeType());
         fileDb.setVersionId(file.getVersionId());
         fileDb.setLatestVersion(file.isLatestVersion());
+        fileDb.setLatestVersion(file.isLatestVersion());
+        fileDb.setDueDate(file.getDueDate());
+        fileDb.setCompletionStatus(file.getCompletionStatus());
 
         return file;
     }
