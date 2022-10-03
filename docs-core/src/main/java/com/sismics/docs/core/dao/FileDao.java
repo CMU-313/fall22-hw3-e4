@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.ArrayList;
 
 /**
  * File DAO.
@@ -215,6 +216,52 @@ public class FileDao {
         q.setParameter("documentIds", documentIds);
         return q.getResultList();
     }
+
+
+    /**
+     * Gets files for the week 
+     *
+     * @param userId User ID
+     * @param documentId Document ID
+     * @param fileType File Type
+     * @returns a list of files with that file type
+     */
+    public List<String> getFilesForTheWeek(String date) {
+        ///we need the backend function here that finds the files due by the week
+
+        //below is dummy code to test API
+        List<String> supplierNames = new ArrayList<String>();
+        supplierNames.add("sup1");
+        supplierNames.add("sup2");
+        supplierNames.add("sup3");
+        return supplierNames;
+    }
+
+    /**
+     * Filters files by type
+     *
+     * @param userId User ID
+     * @param documentId Document ID
+     * @returns a list of file types in the document
+     */
+    public List<String> getFileTypes(String userId, String documentId) {
+        List<File> files = getByDocumentId(userId, documentId);
+        List<String> fileTypes = new ArrayList<String>();
+        
+        for (int i = 0; i < files.size(); i++) {
+
+            String fileName = files.get(i).getName();
+            int index = fileName.lastIndexOf('.');
+            if(index > 0) {
+                String extension = fileName.substring(index + 1);
+                if(!fileTypes.contains(extension)){
+                    fileTypes.add(extension);
+                }
+            }
+        }
+        return fileTypes;
+    }
+
 
     /**
      * Get all files from a version.
