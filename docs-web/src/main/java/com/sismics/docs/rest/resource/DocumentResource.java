@@ -1149,4 +1149,42 @@ public class DocumentResource extends BaseResource {
             relationDao.updateRelationList(documentId, documentIdSet);
         }
     }
+
+
+    /**
+     * Get all fileTypes
+     * Call the getFileTypes method to get list of all file types in a document
+     * Use FileResource to zip the fileIDList and then return the response.
+     *
+     * @param documentId Document ID
+     * @return Responses
+     */
+    @GET
+    @Path("files-for-week")
+    public Response filesForWeek(
+            @QueryParam("id") String date) {
+
+            boolean authenticated = authenticate();
+            
+        
+            //Check document visibility
+            if (!authenticated) {
+                throw new ForbiddenClientException();
+            }
+
+            JsonArrayBuilder files = Json.createArrayBuilder();
+            FileDao fileDao = new FileDao();
+            List<String> filesForWeek = fileDao.getFilesForTheWeek(date);
+
+
+            // return FileHelper;
+            for (String file : filesForWeek){
+                files.add((file));
+            }
+
+            JsonObjectBuilder response = Json.createObjectBuilder()
+                    .add("files", files);
+            return Response.ok().entity(response.build()).build();
+    }
+
 }
