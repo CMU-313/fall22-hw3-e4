@@ -46,19 +46,50 @@
 
 <!-- Display mode (list or grid) -->
 <div class="btn-group mt-10 mb-10 pull-right">
-          <span class="btn btn-default" ng-class="{ active: displayMode == 'list' }"
-                uib-tooltip="{{ 'document.view.content.display_mode_list' | translate }}"
-                tooltip-append-to-body="true"
-                ng-click="displayMode = 'list'">
-            <span class="fas fa-list"></span>
-          </span>
+  <span class="btn btn-default" ng-class="{ active: displayMode == 'list' }"
+        uib-tooltip="{{ 'document.view.content.display_mode_list' | translate }}"
+        tooltip-append-to-body="true"
+        ng-click="displayMode = 'list'">
+    <span class="fas fa-list"></span>
+  </span>
   <span class="btn btn-default" ng-class="{ active: displayMode == 'grid' }"
         uib-tooltip="{{ 'document.view.content.display_mode_grid' | translate }}"
         tooltip-append-to-body="true"
         ng-click="displayMode = 'grid'">
-            <span class="fas fa-th"></span>
-          </span>
+        <span class="fas fa-th"></span>
+  </span>
+  <span class="btn btn-default"
+        uib-tooltip="Display files to do"
+        tooltip-append-to-body="true"
+        ng-click="displayMode = 'grid'">
+        <span class="fas fa-check"></span>
+</span>
 </div>
+
+<!-- Due date -->
+<div class="btn-group mt-10 mb-10 pull-left">
+  <span class="btn btn-default"
+        uib-tooltip="Create todo list"
+        tooltip-append-to-body="true"
+        ng-click="openForm">
+    <span class="fas fa-clipboard"></span>
+  </span>
+</div>
+
+<!-- <div class="form-popup" id="myForm">
+  <form action="/action_page.php" class="form-container">
+    <h1>Login</h1>
+
+    <label for="email"><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" name="email" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required>
+
+    <button type="submit" class="btn">Login</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </form>
+</div> -->
 
 <div class="clearfix"></div>
 
