@@ -68,28 +68,32 @@
 
 <!-- Due date -->
 <div class="btn-group mt-10 mb-10 pull-left">
-  <span class="btn btn-default"
+  <span class="btn btn-default show-modal"
         uib-tooltip="Create todo list"
         tooltip-append-to-body="true"
-        ng-click="openForm">
+        ng-click="openForm()"
+        data-toggle="modal" 
+        data-target="#myModal">
     <span class="fas fa-clipboard"></span>
   </span>
 </div>
 
-<!-- <div class="form-popup" id="myForm">
-  <form action="/action_page.php" class="form-container">
-    <h1>Login</h1>
-
-    <label for="email"><b>Email</b></label>
-    <input type="text" placeholder="Enter Email" name="email" required>
-
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
-
-    <button type="submit" class="btn">Login</button>
-    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+<div id="todo-list-form">
+  <form id="create-todo-form" action="http://example.com/form_submit.php" method="POST">
+    <label for="num-docs">Documents to Review:</label>
+    <input type="text" id="num-docs" name="num-docs" default="1">
+    <button class="close-button"
+            id="todo-list-close" 
+            aria-label="Close alert" 
+            type="button"
+            ng-click="closeForm()">
+            <span aria-hidden="true">&times;</span>
+    </button><br>
+    <label for="due-date">by </label>
+    <input type="date" id="due-date" name="due-date"><br><br>
+    <input type="submit" value="Submit">
   </form>
-</div> -->
+</div>
 
 <div class="clearfix"></div>
 

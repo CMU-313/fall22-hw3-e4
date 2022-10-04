@@ -224,4 +224,58 @@ angular.module('docs').controller('DocumentViewContent', function ($scope, $root
       }
     })
   };
+
+  /**
+   * Open todo list form on button click.
+   */
+   $scope.openForm = function () {
+      document.getElementById("todo-list-form").style.display = "block";
+  };
+
+  /**
+   * Close todo list form on button click.
+   */
+   $scope.closeForm = function () {
+      document.getElementById("todo-list-form").style.display = "none";
+  };
+
+  /**
+   * Get and save the form data
+   */
+  // window.addEventListener("load", () => {
+  //   function sendData() {
+  //     const XHR = new XMLHttpRequest();
+  
+  //     // Bind the FormData object and the form element
+  //     const FD = new FormData(form);
+  
+  //     // Define what happens on successful data submission
+  //     XHR.addEventListener("load", (event) => {
+  //       alert('Your due dates have been saved');
+  //       alert(event.target.responseText);
+  //     });
+  
+  //     // Define what happens in case of error
+  //     XHR.addEventListener("error", (event) => {
+  //       alert('Oops! Something went wrong.');
+  //     });
+  
+  //     // Set up our request
+  //     XHR.open("POST", "https://example.com/cors.php");
+  
+  //     // The data sent is what the user provided in the form
+  //     XHR.send(FD);
+  //   }
+  
+  //   // Get the form element
+  //   const form = document.getElementById("create-todo-form");
+  
+  //   // Add 'submit' event handler
+  //   form.addEventListener("submit", (event) => {
+  //     event.preventDefault();
+  
+  //     sendData();
+  //   });
+  // });
+
 });
