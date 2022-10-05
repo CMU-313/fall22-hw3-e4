@@ -1174,7 +1174,7 @@ public class DocumentResource extends BaseResource {
 
             JsonArrayBuilder files = Json.createArrayBuilder();
             FileDao fileDao = new FileDao();
-            List<String> filesForWeek = fileDao.getFilesForTheWeek(id, days);
+            List<String> filesForWeek = fileDao.getFilesForTheWeek(id, (Integer)days, principal.getId());
 
 
             // return FileHelper;

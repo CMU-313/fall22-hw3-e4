@@ -285,7 +285,7 @@ public class FileResource extends BaseResource {
     @POST
     @Path("{id: [a-z0-9\\-]+}/dueDate")
     public Response updateDueDate(@PathParam("id") String id,
-                           @FormParam("date") String date) {
+                           @FormParam("date") Integer date) {
         if (!authenticate()) {
             throw new ForbiddenClientException();
         }
@@ -294,7 +294,7 @@ public class FileResource extends BaseResource {
         File file = findFile(id, null);
 
         // Validate input data
-        date = ValidationUtil.validateLength(date, "date", 1, 200, false);
+        // date = ValidationUtil.validateLength(date, "date", 1, 200, false);
 
         // Update the file
         FileDao fileDao = new FileDao();
