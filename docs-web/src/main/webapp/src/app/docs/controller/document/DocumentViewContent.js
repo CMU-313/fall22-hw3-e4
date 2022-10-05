@@ -240,42 +240,27 @@ angular.module('docs').controller('DocumentViewContent', function ($scope, $root
   };
 
   /**
-   * Get and save the form data
+   * Send form data to API.
    */
-  // window.addEventListener("load", () => {
-  //   function sendData() {
-  //     const XHR = new XMLHttpRequest();
-  
-  //     // Bind the FormData object and the form element
-  //     const FD = new FormData(form);
-  
-  //     // Define what happens on successful data submission
-  //     XHR.addEventListener("load", (event) => {
-  //       alert('Your due dates have been saved');
-  //       alert(event.target.responseText);
-  //     });
-  
-  //     // Define what happens in case of error
-  //     XHR.addEventListener("error", (event) => {
-  //       alert('Oops! Something went wrong.');
-  //     });
-  
-  //     // Set up our request
-  //     XHR.open("POST", "https://example.com/cors.php");
-  
-  //     // The data sent is what the user provided in the form
-  //     XHR.send(FD);
-  //   }
-  
-  //   // Get the form element
-  //   const form = document.getElementById("create-todo-form");
-  
-  //   // Add 'submit' event handler
-  //   form.addEventListener("submit", (event) => {
-  //     event.preventDefault();
-  
-  //     sendData();
-  //   });
-  // });
+   $scope.sendDays = function () {
+    var reviewedDate = document.getElementById('review-days').value;
 
+    let xhr = new XMLHttpRequest();
+    let url = "api/file/" + $stateParams.id + "/dueDate";
+    console.log(url);
+
+    // open a connection
+    xhr.open("POST", url, true);
+
+    // Set the request header i.e. which type of content you are sending
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    // Converting JSON data to string
+    var data = JSON.stringify({ "documentID": $stateParams.id, 
+                                "days": reviewedDate });
+
+    // Sending data with the request
+    xhr.send(data);
+  }
 });

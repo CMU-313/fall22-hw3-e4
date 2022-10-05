@@ -58,12 +58,6 @@
         ng-click="displayMode = 'grid'">
         <span class="fas fa-th"></span>
   </span>
-  <span class="btn btn-default"
-        uib-tooltip="Display files to do"
-        tooltip-append-to-body="true"
-        ng-click="displayMode = 'grid'">
-        <span class="fas fa-check"></span>
-</span>
 </div>
 
 <!-- Due date -->
@@ -79,9 +73,9 @@
 </div>
 
 <div id="todo-list-form">
-  <form id="create-todo-form" action="http://example.com/form_submit.php" method="POST">
-    <label for="num-docs">Documents to Review:</label>
-    <input type="text" id="num-docs" name="num-docs" default="1">
+  <form id="create-todo-form">
+    <label for="review-days">I want all of my files to be reviewed in: 
+    <input type="text" id="review-days" name="review-days" value=""> days</label>
     <button class="close-button"
             id="todo-list-close" 
             aria-label="Close alert" 
@@ -89,9 +83,9 @@
             ng-click="closeForm()">
             <span aria-hidden="true">&times;</span>
     </button><br>
-    <label for="due-date">by </label>
-    <input type="date" id="due-date" name="due-date"><br><br>
-    <input type="submit" value="Submit">
+    <!-- <label for="due-date">by </label>
+    <input type="date" id="due-date" name="due-date"><br><br> -->
+    <input type="submit" value="Submit" ng-click="sendDays()">
   </form>
 </div>
 
