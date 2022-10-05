@@ -284,24 +284,32 @@ public class FileResource extends BaseResource {
      */
     @POST
     @Path("{id: [a-z0-9\\-]+}/dueDate")
-    public Response updateDueDate(@PathParam("id") String id,
+    public Response updateDueDate(@PathParam("id") String DocumentID,
                            @FormParam("date") String date) {
         if (!authenticate()) {
             throw new ForbiddenClientException();
         }
 
         // Get the file
-        File file = findFile(id, null);
+        //File file = findFile(id, null);
+
+        JsonArrayBuilder files = Json.createArrayBuilder();
+        FileDao fileDao = new FileDao();
+        List<String> fileIDList = fileDao.getByDocumentId(principal.getId(), documentId);
+        for (String fileId : fileIDList){
+            File file = fileDao.getFile(fileId);
+            file.setDueDate(date);
+            fileDao.update(file);
+            if (file == null) {
+                throw new NotFoundException();
+            }
+            files.add(RestUtil.fileToJsonObjectBuilder(file));
+        }
 
         // Validate input data
-        date = ValidationUtil.validateLength(date, "date", 1, 200, false);
+        //date = ValidationUtil.validateLength(date, "date", 1, 200, false);
 
-        // Update the file
-        FileDao fileDao = new FileDao();
-        file.setDueDate(date);
-        fileDao.update(file);
-
-        // Always return OK
+        // Always returnf OK
         JsonObjectBuilder response = Json.createObjectBuilder()
                 .add("status", "ok");
         return Response.ok().entity(response.build()).build();

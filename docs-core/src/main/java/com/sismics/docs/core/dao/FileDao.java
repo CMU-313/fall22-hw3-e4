@@ -262,7 +262,6 @@ public class FileDao {
         return fileTypes;
     }
 
-
     /**
      * Get all files from a version.
      *

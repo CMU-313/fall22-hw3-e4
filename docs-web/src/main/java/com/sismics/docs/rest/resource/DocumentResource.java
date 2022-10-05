@@ -1162,7 +1162,8 @@ public class DocumentResource extends BaseResource {
     @GET
     @Path("files-for-week")
     public Response filesForWeek(
-            @QueryParam("id") String date) {
+            @PathParam("id") String DocumentID,
+            @FormParam("date") String date) {
 
             boolean authenticated = authenticate();
             
@@ -1174,7 +1175,7 @@ public class DocumentResource extends BaseResource {
 
             JsonArrayBuilder files = Json.createArrayBuilder();
             FileDao fileDao = new FileDao();
-            List<String> filesForWeek = fileDao.getFilesForTheWeek(date);
+            List<String> filesForWeek = fileDao.getFilesForTheWeek(DocumentID, date);
 
 
             // return FileHelper;
