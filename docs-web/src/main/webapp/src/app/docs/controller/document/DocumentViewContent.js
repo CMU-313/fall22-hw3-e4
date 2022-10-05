@@ -57,7 +57,7 @@ angular.module('docs').controller('DocumentViewContent', function ($scope, $root
     // need to replace route
     Restangular.one('file/list').get({ id: $stateParams.id }).then(function (data) {
       // double check list attribute name
-      const numOfDay = data.numOfDay;
+      var numOfDay = data.numOfDay;
       let heading = document.createElement("h2");
       heading.innerHTML = "The files to be reviewed for the following " + numOfDay + " days:";
 
