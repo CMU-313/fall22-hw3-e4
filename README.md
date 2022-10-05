@@ -1,5 +1,5 @@
 ![Open in Codespaces](https://classroom.github.com/assets/open-in-codespaces-abfff4d4e15f9e1bd8274d9a39a0befe03a0632bb0f153d0ec72ff541cedbe34.svg)
------------------------------------DOCUMENTATION-----------------------------------
+-------------------DOCUMENTATION-------------------
 New features: 
   - Grader can set a due date for the applications, and Teedy will assign each application with a due date.
   - The grader can get all the files they needs to review by within the next [x] amount of days.
