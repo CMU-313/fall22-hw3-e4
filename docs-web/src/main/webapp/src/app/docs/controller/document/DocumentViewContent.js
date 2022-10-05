@@ -51,6 +51,22 @@ angular.module('docs').controller('DocumentViewContent', function ($scope, $root
   $scope.loadFiles();
 
   /**
+   * Load files to be reviewed.
+   */
+  $scope.loadFilesToReview = function () {
+    // need to replace route
+    Restangular.one('file/list').get({ id: $stateParams.id }).then(function (data) {
+      // double check list attribute name
+      const numOfDay = data.numOfDay;
+      let heading = document.createElement("h2");
+      heading.innerHTML = "The files to be reviewed for the following " + numOfDay + " days:";
+
+      // double check list attribute name
+      $scope.files = data.files;
+    });
+  }
+
+  /**
    * Navigate to the selected file.
    */
   $scope.openFile = function (file, $event) {
