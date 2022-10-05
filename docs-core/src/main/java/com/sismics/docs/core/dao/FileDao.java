@@ -226,7 +226,7 @@ public class FileDao {
      * @param fileType File Type
      * @returns a list of files with that file type
      */
-    public List<String> getFilesForTheWeek(String date) {
+    public List<String> getFilesForTheWeek(String documentIds, int date) {
         ///we need the backend function here that finds the files due by the week
 
         //below is dummy code to test API

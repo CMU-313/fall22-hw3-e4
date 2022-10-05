@@ -1160,13 +1160,13 @@ public class DocumentResource extends BaseResource {
      * @return Responses
      */
     @GET
-    @Path("files-for-week")
+    @Path("{id: [a-z0-9\\-]+}/files-for-week")
     public Response filesForWeek(
-            @QueryParam("id") String date) {
+            @PathParam("id") String id,
+            @QueryParam("days") int days) {
 
             boolean authenticated = authenticate();
             
-        
             //Check document visibility
             if (!authenticated) {
                 throw new ForbiddenClientException();
@@ -1174,7 +1174,7 @@ public class DocumentResource extends BaseResource {
 
             JsonArrayBuilder files = Json.createArrayBuilder();
             FileDao fileDao = new FileDao();
-            List<String> filesForWeek = fileDao.getFilesForTheWeek(date);
+            List<String> filesForWeek = fileDao.getFilesForTheWeek(id, days);
 
 
             // return FileHelper;
