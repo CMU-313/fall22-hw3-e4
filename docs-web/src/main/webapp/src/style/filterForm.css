@@ -1,0 +1,13 @@
+#filter-form {
+    display: none;
+    border: 2px solid #cbcbcb;
+    margin-top: 63px;
+    border-radius: 5px;
+    background-color: white; 
+    padding: 36px;
+    z-index: 9;
+  }
+/*   
+  #filter-form-close {
+    float: right;
+  } */

@@ -51,16 +51,29 @@ angular.module('docs').controller('DocumentViewContent', function ($scope, $root
   $scope.loadFiles();
 
   /**
+   * Open view files by days form
+   */
+  $scope.openFilterForm = function () {
+    document.getElementById("filter-form").style.display = "block";
+  }
+
+  /**
+   * Close view files by days form
+   */
+   $scope.closeFilterForm = function () {
+    document.getElementById("filter-form").style.display = "none";
+  }
+
+  /**
    * Load files to be reviewed.
    */
   $scope.loadFilesToReview = function () {
+    // gets user input
+    var numOfDays = document.getElementById('filter-review-days').value;
     // need to replace route
     Restangular.one('file/list').get({ id: $stateParams.id }).then(function (data) {
-      // double check list attribute name
-      var numOfDay = data.numOfDay;
       let heading = document.createElement("h2");
-      heading.innerHTML = "The files to be reviewed for the following " + numOfDay + " days:";
-
+      heading.innerHTML = "The files to be reviewed for the following " + numOfDays + " days:";
       // double check list attribute name
       $scope.files = data.files;
     });
