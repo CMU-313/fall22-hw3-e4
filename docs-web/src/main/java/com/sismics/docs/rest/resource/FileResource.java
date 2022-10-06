@@ -286,7 +286,7 @@ public class FileResource extends BaseResource {
     @POST
     @Path("{id: [a-z0-9\\-]+}/dueDate")
     public Response updateDueDate(@PathParam("id") String id,
-                           @FormParam("date") Integer days) {
+                           @QueryParam("date") Integer days) {
         if (!authenticate()) {
             throw new ForbiddenClientException();
         }
