@@ -72,6 +72,7 @@ angular.module('docs').controller('DocumentViewContent', function ($scope, $root
     // Gets user input
     var numOfDays = document.getElementById('filter-review-days').value;
     let url = "../api/document/" + $stateParams.id + "/files-for-week?days=" + numOfDays;
+    console.log(url);
     Restangular.oneUrl(url).get().then(function (data) {
       // Add heading
       const target = document.getElementById('to-add-h2')
