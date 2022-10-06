@@ -269,24 +269,25 @@ public class FileResource extends BaseResource {
     /**
      * Update the due date of a file.
      *
-     * @api {post} /file/:id Update a file
+     * @api {post} /file/:id/dueDate Update a file's due date
      * @apiName PostFile
      * @apiGroup File
-     * @apiParam {String} id File ID
-     * @apiParam {String} name Name
+     * @apiParam {String} ID
+     * @apiParam {Integer} days
      * @apiSuccess {String} status Status OK
      * @apiError (client) ForbiddenError Access denied
      * @apiError (client) ValidationError Validation error
      * @apiPermission user
      * @apiVersion 1.6.0
      *
-     * @param id File ID
+     * @param id Document ID
+     * @param days Number of days
      * @return Response
      */
-    @POST
+    @GET
     @Path("{id: [a-z0-9\\-]+}/dueDate")
     public Response updateDueDate(@PathParam("id") String id,
-                           @FormParam("date") Integer days) {
+                           @QueryParam("date") Integer days) {
         if (!authenticate()) {
             throw new ForbiddenClientException();
         }
@@ -313,9 +314,6 @@ public class FileResource extends BaseResource {
             file.setDueDate(calc);
             fileDao.update(file);
             currDay++;
-            if (file == null) {
-                throw new NotFoundException();
-            }
             files.add(RestUtil.fileToJsonObjectBuilder(file));
         }
 

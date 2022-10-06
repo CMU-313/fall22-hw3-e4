@@ -246,21 +246,21 @@ angular.module('docs').controller('DocumentViewContent', function ($scope, $root
     var reviewedDate = document.getElementById('review-days').value;
 
     let xhr = new XMLHttpRequest();
-    let url = "api/file/" + $stateParams.id + "/dueDate";
+    let url = "../api/file/" + $stateParams.id + "/dueDate?date=" + reviewedDate;
     console.log(url);
 
     // open a connection
-    xhr.open("POST", url, true);
+    xhr.open("GET", url, true);
 
     // Set the request header i.e. which type of content you are sending
-    xhr.setRequestHeader("Accept", "application/json");
-    xhr.setRequestHeader("Content-Type", "application/json");
+    // xhr.setRequestHeader("Accept", "application/json");
+    // xhr.setRequestHeader("Content-Type", "application/json");
 
     // Converting JSON data to string
-    var data = JSON.stringify({ "documentID": $stateParams.id, 
-                                "days": reviewedDate });
+    // var data = JSON.stringify({ "documentID": $stateParams.id, 
+    //                             "days": reviewedDate });
 
     // Sending data with the request
-    xhr.send(data);
+    xhr.send();
   }
 });
