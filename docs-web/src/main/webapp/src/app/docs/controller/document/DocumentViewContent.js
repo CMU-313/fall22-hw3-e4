@@ -68,13 +68,12 @@ angular.module('docs').controller('DocumentViewContent', function ($scope, $root
    * Load files to be reviewed.
    */
   $scope.loadFilesToReview = function () {
-    // gets user input
+    // Gets user input
     var numOfDays = document.getElementById('filter-review-days').value;
-    // need to replace route
-    Restangular.one('file/list').get({ id: $stateParams.id }).then(function (data) {
+    // Gets file list and load files
+    Restangular.one('document/filesForWeek').get({ id: $stateParams.id, days: numOfDays }).then(function (data) {
       let heading = document.createElement("h2");
       heading.innerHTML = "The files to be reviewed for the following " + numOfDays + " days:";
-      // double check list attribute name
       $scope.files = data.files;
     });
   }
