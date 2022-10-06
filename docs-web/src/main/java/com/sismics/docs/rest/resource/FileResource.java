@@ -29,7 +29,6 @@ import com.sismics.util.context.ThreadLocalContext;
 import com.sismics.util.mime.MimeType;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
-import java.util.ArrayList;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -286,43 +285,23 @@ public class FileResource extends BaseResource {
     @POST
     @Path("{id: [a-z0-9\\-]+}/dueDate")
     public Response updateDueDate(@PathParam("id") String id,
-                           @FormParam("date") Integer days) {
+                           @FormParam("date") String date) {
         if (!authenticate()) {
             throw new ForbiddenClientException();
         }
 
         // Get the file
-        //File file = findFile(id, null);
-
-        JsonArrayBuilder files = Json.createArrayBuilder();
-        FileDao fileDao = new FileDao();
-        List<File> fileList = fileDao.getByDocumentId(principal.getId(), id);
-        
-        List<String> fileIDList = new ArrayList<String>();
-        for (int i = 0; i < fileList.size(); i++) {
-            fileIDList.add(fileList.get(i).getId());
-        }
-        int currDay = 0;
-        //total number of files
-        //total // number of days
-        //counter = 0 all the way to the last day 
-
-        for (String fileId : fileIDList){
-            int calc = (currDay % days) + 1;
-            File file = fileDao.getFile(fileId);
-            file.setDueDate(calc);
-            fileDao.update(file);
-            currDay++;
-            if (file == null) {
-                throw new NotFoundException();
-            }
-            files.add(RestUtil.fileToJsonObjectBuilder(file));
-        }
+        File file = findFile(id, null);
 
         // Validate input data
-        // date = ValidationUtil.validateLength(date, "date", 1, 200, false);
+        date = ValidationUtil.validateLength(date, "date", 1, 200, false);
 
-        // Always returnf OK
+        // Update the file
+        FileDao fileDao = new FileDao();
+        file.setDueDate(date);
+        fileDao.update(file);
+
+        // Always return OK
         JsonObjectBuilder response = Json.createObjectBuilder()
                 .add("status", "ok");
         return Response.ok().entity(response.build()).build();
@@ -571,7 +550,6 @@ public class FileResource extends BaseResource {
     @GET
     @Path("{id: [a-z0-9\\-]+}/versions")
     public Response versions(@PathParam("id") String id) {
-        
         if (!authenticate()) {
             throw new ForbiddenClientException();
         }
