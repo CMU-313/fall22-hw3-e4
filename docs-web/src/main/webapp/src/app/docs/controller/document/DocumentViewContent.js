@@ -68,12 +68,18 @@ angular.module('docs').controller('DocumentViewContent', function ($scope, $root
    * Load files to be reviewed.
    */
   $scope.loadFilesToReview = function () {
+    $scope.closeFilterForm();
     // Gets user input
     var numOfDays = document.getElementById('filter-review-days').value;
-    // Gets file list and load files
-    Restangular.one('document/filesForWeek').get({ id: $stateParams.id, days: numOfDays }).then(function (data) {
-      let heading = document.createElement("h2");
+    let url = "../api/document/" + $stateParams.id + "/files-for-week?days=" + numOfDays;
+    Restangular.oneUrl(url).get().then(function (data) {
+      // Add heading
+      const target = document.getElementById('to-add-h2')
+      let heading = document.createElement("h3");
       heading.innerHTML = "The files to be reviewed for the following " + numOfDays + " days:";
+      target.appendChild(heading);
+
+      // Load files
       $scope.files = data.files;
     });
   }
