@@ -29,6 +29,7 @@ import com.sismics.util.context.ThreadLocalContext;
 import com.sismics.util.mime.MimeType;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import java.util.ArrayList;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -285,7 +286,7 @@ public class FileResource extends BaseResource {
     @POST
     @Path("{id: [a-z0-9\\-]+}/dueDate")
     public Response updateDueDate(@PathParam("id") String id,
-                           @FormParam("date") Integer date) {
+                           @FormParam("date") Integer days) {
         if (!authenticate()) {
             throw new ForbiddenClientException();
         }
@@ -295,7 +296,12 @@ public class FileResource extends BaseResource {
 
         JsonArrayBuilder files = Json.createArrayBuilder();
         FileDao fileDao = new FileDao();
-        List<String> fileIDList = fileDao.getByDocumentId(principal.getId(), documentId);
+        List<File> fileList = fileDao.getByDocumentId(principal.getId(), id);
+        
+        List<String> fileIDList = new ArrayList<String>();
+        for (int i = 0; i < fileList.size(); i++) {
+            fileIDList.add(fileList.get(i).getId());
+        }
         int currDay = 0;
         //total number of files
         //total // number of days
