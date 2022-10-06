@@ -41,11 +41,11 @@ public class File implements Loggable {
     private String name;
 
     /**
-     * Due Date.
-     * mm/dd/yyyy
+     * Due Day.
+     * Day that we want to complete the file by
      */
     @Column(name = "FIL_DUEDATE_C", length = 200)
-    private String dueDate;
+    private Integer dueDate;
 
     /**
      * Name.
@@ -134,11 +134,11 @@ public class File implements Loggable {
         return this;
     }
 
-    public String getDueDate() {
+    public Integer getDueDate() {
         return dueDate;
     }
 
-    public File setDueDate(String dueDate) {
+    public File setDueDate(Integer dueDate) {
         this.dueDate = dueDate;
         return this;
     }

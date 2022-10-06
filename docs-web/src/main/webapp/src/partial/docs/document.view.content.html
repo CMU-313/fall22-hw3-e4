@@ -72,18 +72,47 @@
 
 <!-- Display mode (list or grid) -->
 <div class="btn-group mt-10 mb-10 pull-right">
-          <span class="btn btn-default" ng-class="{ active: displayMode == 'list' }"
-                uib-tooltip="{{ 'document.view.content.display_mode_list' | translate }}"
-                tooltip-append-to-body="true"
-                ng-click="displayMode = 'list'">
-            <span class="fas fa-list"></span>
-          </span>
+  <span class="btn btn-default" ng-class="{ active: displayMode == 'list' }"
+        uib-tooltip="{{ 'document.view.content.display_mode_list' | translate }}"
+        tooltip-append-to-body="true"
+        ng-click="displayMode = 'list'">
+    <span class="fas fa-list"></span>
+  </span>
   <span class="btn btn-default" ng-class="{ active: displayMode == 'grid' }"
         uib-tooltip="{{ 'document.view.content.display_mode_grid' | translate }}"
         tooltip-append-to-body="true"
         ng-click="displayMode = 'grid'">
-            <span class="fas fa-th"></span>
-          </span>
+        <span class="fas fa-th"></span>
+  </span>
+</div>
+
+<!-- Due date -->
+<div class="btn-group mt-10 mb-10 pull-left">
+  <span class="btn btn-default show-modal"
+        uib-tooltip="Set due date"
+        tooltip-append-to-body="true"
+        ng-click="openForm()"
+        data-toggle="modal" 
+        data-target="#myModal">
+    <span>Set due date</span>
+  </span>
+</div>
+
+<div id="todo-list-form">
+  <form id="create-todo-form">
+    <label for="review-days">I want all of my files to be reviewed in: 
+    <input type="number" id="review-days" name="review-days" value=""> days</label>
+    <button class="close-button"
+            id="todo-list-close" 
+            aria-label="Close alert" 
+            type="button"
+            ng-click="closeForm()">
+            <span aria-hidden="true">&times;</span>
+    </button><br>
+    <!-- <label for="due-date">by </label>
+    <input type="date" id="due-date" name="due-date"><br><br> -->
+    <input type="submit" value="Submit" ng-click="sendDays()">
+  </form>
 </div>
 
 <div class="clearfix"></div>

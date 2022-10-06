@@ -226,15 +226,16 @@ public class FileDao {
      * @param fileType File Type
      * @returns a list of files with that file type
      */
-    public List<String> getFilesForTheWeek(String date) {
-        ///we need the backend function here that finds the files due by the week
-
-        //below is dummy code to test API
-        List<String> supplierNames = new ArrayList<String>();
-        supplierNames.add("sup1");
-        supplierNames.add("sup2");
-        supplierNames.add("sup3");
-        return supplierNames;
+    public List<String> getFilesForTheWeek(String documentId, int date, String userId) {
+        List<File> files = getByDocumentId(userId, documentId);
+        List<String> filesToReview = new ArrayList<String>();
+        for (int i = 0; i < files.size(); i ++) {
+            Integer fileDay = files.get(i).getDueDate();
+            if(date >= fileDay) {
+                filesToReview.add(files.get(i).getName());
+            }
+        }
+        return filesToReview;
     }
 
     /**
@@ -261,7 +262,6 @@ public class FileDao {
         }
         return fileTypes;
     }
-
 
     /**
      * Get all files from a version.
