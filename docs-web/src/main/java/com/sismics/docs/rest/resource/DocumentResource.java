@@ -1178,8 +1178,12 @@ public class DocumentResource extends BaseResource {
 
 
             // return FileHelper;
-            for (String file : filesForWeek){
-                files.add((file));
+            for (String fileID : filesForWeek){
+                File fileAdd = fileDao.getFile(fileID);
+                if (fileAdd == null) {
+                    throw new NotFoundException();
+                }
+                files.add(RestUtil.fileToJsonObjectBuilder(fileAdd));
             }
 
             JsonObjectBuilder response = Json.createObjectBuilder()

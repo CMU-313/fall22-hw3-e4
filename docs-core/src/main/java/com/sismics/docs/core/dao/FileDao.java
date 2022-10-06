@@ -232,7 +232,11 @@ public class FileDao {
         for (int i = 0; i < files.size(); i ++) {
             int fileDay = files.get(i).getDueDate();
             if(days >= fileDay) {
+<<<<<<< HEAD
                 filesToReview.add(files.get(i).toString());
+=======
+                filesToReview.add(files.get(i).getId());
+>>>>>>> d5f7dd5cbd7329755f1afaaa3a9e9fc843fd8c6f
 
             }
         }
