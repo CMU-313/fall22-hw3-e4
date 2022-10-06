@@ -230,9 +230,9 @@ public class FileDao {
         List<File> files = getByDocumentId(userId, documentId);
         List<String> filesToReview = new ArrayList<String>();
         for (int i = 0; i < files.size(); i ++) {
-            Integer fileDay = files.get(i).getDueDate();
+            int fileDay = files.get(i).getDueDate();
             if(date >= fileDay) {
-                filesToReview.add(files.get(i).getName());
+                filesToReview.add(files.get(i).getId());
             }
         }
         return filesToReview;
