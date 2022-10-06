@@ -76,11 +76,10 @@ angular.module('docs').controller('DocumentViewContent', function ($scope, $root
     // Add (swap) heading
     const target_div = document.getElementById('to-add-h3')
     let new_heading = document.createElement("h3");
-    new_heading.setAttribute('id', 'review-days');
+    new_heading.setAttribute('id', 'review-days-heading');
     new_heading.innerHTML = "The files to be reviewed for the following " + numOfDays + " days:";
     target_div.replaceChild(new_heading, target_div.childNodes[0]);
 
-    target.appendChild(heading);
     Restangular.oneUrl(url).get().then(function (data) {
       // Load files
       $scope.files = data.files;
