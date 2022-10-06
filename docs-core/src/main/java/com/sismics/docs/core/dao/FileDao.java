@@ -223,15 +223,15 @@ public class FileDao {
      *
      * @param userId User ID
      * @param documentId Document ID
-     * @param fileType File Type
-     * @returns a list of files with that file type
+     * @param days due days
+     * @returns a list of files with that imminent due date
      */
-    public List<String> getFilesForTheWeek(String documentId, int date, String userId) {
+    public List<String> getFilesForTheWeek(String documentId, int days, String userId) {
         List<File> files = getByDocumentId(userId, documentId);
         List<String> filesToReview = new ArrayList<String>();
         for (int i = 0; i < files.size(); i ++) {
-            Integer fileDay = files.get(i).getDueDate();
-            if(date >= fileDay) {
+            int fileDay = files.get(i).getDueDate();
+            if(days >= fileDay) {
                 filesToReview.add(files.get(i).getName());
             }
         }
