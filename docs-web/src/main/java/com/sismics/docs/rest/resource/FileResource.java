@@ -291,17 +291,32 @@ public class FileResource extends BaseResource {
         }
 
         // Get the file
-        File file = findFile(id, null);
+        //File file = findFile(id, null);
+
+        JsonArrayBuilder files = Json.createArrayBuilder();
+        FileDao fileDao = new FileDao();
+        List<String> fileIDList = fileDao.getByDocumentId(principal.getId(), documentId);
+        int currDay = 0;
+        //total number of files
+        //total // number of days
+        //counter = 0 all the way to the last day 
+
+        for (String fileId : fileIDList){
+            int calc = (currDay % days) + 1;
+            File file = fileDao.getFile(fileId);
+            file.setDueDate(calc);
+            fileDao.update(file);
+            currDay++;
+            if (file == null) {
+                throw new NotFoundException();
+            }
+            files.add(RestUtil.fileToJsonObjectBuilder(file));
+        }
 
         // Validate input data
         // date = ValidationUtil.validateLength(date, "date", 1, 200, false);
 
-        // Update the file
-        FileDao fileDao = new FileDao();
-        file.setDueDate(date);
-        fileDao.update(file);
-
-        // Always return OK
+        // Always returnf OK
         JsonObjectBuilder response = Json.createObjectBuilder()
                 .add("status", "ok");
         return Response.ok().entity(response.build()).build();
