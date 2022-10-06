@@ -550,6 +550,7 @@ public class FileResource extends BaseResource {
     @GET
     @Path("{id: [a-z0-9\\-]+}/versions")
     public Response versions(@PathParam("id") String id) {
+        
         if (!authenticate()) {
             throw new ForbiddenClientException();
         }
