@@ -11,8 +11,7 @@
   - Go to selected document, then click 'Set due date' button and entered in a positive interger in the form that reads: "I want all of my files to be reviewed in: [x] days". Press submit and close button.
   - Click on Filter button next to List and Grid view and enter a number of days that you want to see all the files that need to be reviewed by that day
 - ### How to user test:    
-  - TODO.  
-  - TestFileResource.java has a function testUploadDueDateAndCompletionStatus to test   
+  - TestFileResource.java has functions to test DueDate, CompletionStatus 
 
 ---
     
