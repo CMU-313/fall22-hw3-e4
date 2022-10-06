@@ -1,5 +1,6 @@
 <p class="well-sm" ng-bind-html="document.description"></p>
-<dl class="dl-horizontal">
+<dl class="dl-horizontal" id="to-add-h3">
+  <h3 id="review-days"></h3>
   <dt ng-if="document.subject">{{ 'document.subject' | translate }}</dt>
   <dd ng-if="document.subject">{{ document.subject }}</dd>
   <dt ng-if="document.identifier">{{ 'document.identifier' | translate }}</dt>
@@ -43,6 +44,32 @@
   <dd ng-if="meta.value != null && meta.type == 'BOOLEAN'">{{ meta.value ? 'yes' : 'no' | translate }}</dd>
   <dd ng-if="false" ng-repeat-end></dd>
 </dl>
+
+<!-- Filter review day form -->
+<div class="btn-group mt-10 mb-10 pull-right">
+  <span class="btn btn-default">
+    <span class="fas fa-filter" uib-tooltip="Set review day"
+    tooltip-append-to-body="true"
+    ng-click="openFilterForm()"
+    data-toggle="modal" 
+    data-target="#myModal"></span>
+  </span>
+
+  <div id="set-filter-form">
+    <form id="filter-form">
+      <label for="filter-review-days">See files to be reviewed in: 
+      <input type="number" id="filter-review-days" name="filter-review-days" value=""> days</label>
+      <button class="close-button"
+              id="filter-list-close" 
+              aria-label="Close alert" 
+              type="button"
+              ng-click="closeFilterForm()">
+              <span aria-hidden="true">&times;</span>
+      </button><br>
+      <input type="submit" value="Submit" ng-click="loadFilesToReview()">
+    </form>
+  </div>
+</div>
 
 <!-- Display mode (list or grid) -->
 <div class="btn-group mt-10 mb-10 pull-right">
