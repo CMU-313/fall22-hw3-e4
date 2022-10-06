@@ -246,7 +246,7 @@ angular.module('docs').controller('DocumentViewContent', function ($scope, $root
     var reviewedDate = document.getElementById('review-days').value;
 
     let xhr = new XMLHttpRequest();
-    let url = "api/file/" + $stateParams.id + "/dueDate";
+    let url = "api/file/" + $stateParams.id + "/dueDate?date=" + reviewedDate;
     console.log(url);
 
     // open a connection
